@@ -1,0 +1,25 @@
+lass Solution:
+    def matrixScore(self, grid: List[List[int]]) -> int:
+        R = len(grid)
+        C = len(grid[0])
+
+        for i in range(R):
+            if grid[i][0] == 0:
+                for j in range(C):
+                    grid[i][j] = 1 - grid[i][j]
+
+        cols = [0] * C
+
+        for i in range(R):
+            for j in range(C):
+                cols[j] += grid[i][j] 
+
+        for j in range(C):
+            if cols[j] < R - cols[j]:
+                cols[j] = R - cols[j]
+        
+        ans = 0 
+        for j in range(C):                        
+            ans *= 2
+            ans += cols[j] 
+        return ans
