@@ -1,0 +1,39 @@
+from typing import List
+
+class Solution:
+    def getMaximumGold(self, grid: List[List[int]]) -> int:
+        R = len(grid)
+        C = len(grid[0])
+
+        directions = [
+            (1, 0), (-1, 0), (0, 1), (0, -1),
+        ]
+
+        best = 0
+
+        def visit(x, y, current):
+            nonlocal best
+            if grid[x][y] == 0:
+                return
+
+            best = max(best, current)
+
+            
+            p = grid[x][y]
+            grid[x][y] = 0
+
+           
+            for dx, dy in directions:
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < R and 0 <= ny < C and grid[nx][ny] > 0:
+                    visit(nx, ny, current + grid[nx][ny])
+
+           
+            grid[x][y] = p
+
+        for i in range(R):
+            for j in range(C):
+                if grid[i][j] > 0:
+                    visit(i, j, grid[i][j])
+
+        return best
