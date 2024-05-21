@@ -1,0 +1,20 @@
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        N = len(nums)
+
+        ans = []
+
+        def generate(index, current):
+            if index == N:
+                ans.append(current[:])
+                return 
+
+            generate(index + 1, current)
+            current.append(nums[index])
+            generate(index +1,current)
+            current.pop()
+
+        generate(0, [])
+        return ans    
+
+
