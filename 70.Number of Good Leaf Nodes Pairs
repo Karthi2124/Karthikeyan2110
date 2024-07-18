@@ -1,0 +1,27 @@
+class Solution(object):
+    def countPairs(self, root, distance):
+        """
+        :type root: TreeNode
+        :type distance: int
+        :rtype: int
+        """
+        self.res = 0
+        def helper(root):
+            if not root:
+                return []
+            if not root.left and not root.right: 
+                return [1]
+            left = helper(root.left)
+            right = helper(root.right)
+            for l in left:
+                for r in right:
+                    if l + r <= distance:
+                        self.res += 1
+            result = []
+            for n in left + right:
+                if n + 1 < distance:
+                    result.append(n + 1)
+
+            return result
+        helper(root)
+        return self.res
